@@ -13,15 +13,32 @@
              var email = document.getElementById("email").value;
              //js正则的验证
              if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(email)) {
-                 alert("请输入有效邮箱！")
+                 alert("请输入有效邮箱！");
                  return false;
+             }
+         }
+         function  showTips(id,msg)
+         {
+             document.getElementById(id+"Span").innerHTML = "<font color=\"gray\">"+msg+"</font>";
+         }
+         function  check(id,msg)
+         {
+             var username = document.getElementById(id).value;
+             if (username == "")
+             {
+                 document.getElementById(id+"Span").innerHTML = "<font color=\"red\">"+msg+"</font>";
+             }
+             else
+             {
+                 document.getElementById(id+"Span").innerHTML = "";
              }
          }
     </script>
 </head>
 <body>
-   <form action="#" onsubmit="checkForm()">
-       用户名：<input type="text" name="username" maxlength="15" placeholder="请输入用户名" id="username"><br/>
+   <form action="#" onsubmit="checkForm()" id="form">
+       用户名：<input type="text" name="username" maxlength="15" placeholder="请输入用户名" id="username" onfocus="showTips('username','用户名必填')" onblur="check('username','用户名不能为空！')">
+       <span id="usernameSpan"></span><br/>
        密码：<input type="password" name="password" required="required"><br/>
        确认密码：<input type="password"><br/>
        邮箱：<input type="text" name="email" id="email"><br/>
