@@ -5,14 +5,33 @@
     <title>首页</title>
 </head>
     <link href="../css/ShouYe.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="../js/ShouYe.js">
-
+<!--js实现动态效果-->
+    <!--<script type="text/javascript" src="../js/ShouYe.js">-->
+    <!--</script>-->
+<!--jq实现动态效果-->
+    <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
+    <script>
+        $(function ()
+        {
+           timer = window.setInterval("showAD()",3000);
+        });
+        function showAD()
+        {
+            $("#AdImg").slideDown(3000);
+            window.clearInterval(timer);
+            timer = window.setInterval("hiddenAD()",3000);
+        }
+        function hiddenAD()
+        {
+            $("#AdImg").slideUp(3000);
+            window.clearInterval(timer);
+        }
     </script>
-<body>·
+<body>
     <div id="father">
         <div>
-            <img id="AdImg" src="../img/f001a62f-a49d-4a4d-b56f-2b6908a0002c_g.jpg" width="1300" height="0">
-        </div>
+            <img id="AdImg" src="../img/f001a62f-a49d-4a4d-b56f-2b6908a0002c_g.jpg" width="100%" style="display: none">
+
          <!--logo-->
         <div id="logo">
             <div class="top">

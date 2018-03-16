@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery入门</title>
+    <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
+    <script>
+//        jQuery页面加载方法不存在覆盖问题，执行顺序和书写顺序相同
+        $(function ()
+        {
+          alert("hello jqurey");
+        })
+        $(function ()
+        {
+           $("#btn").click(function ()
+           {
+               $("#Span")[0].innerHTML = "jq对象转js对象后，才能调用js方法";
+           })
+            $("#btn1").click(function ()
+            {
+                var span = document.getElementById("Span");
+                $(span).html("js对象转jq对象后,才能调用jq方法");
+            })
+            $("#btn3").click(function () {
+                $("#img").toggle();
+            })
+        })
+    </script>
+</head>
+<body>
+    <input type="button" id="btn" value="jq对象转js"><br>
+    <input type="button" id="btn1" value="js对象转jq对象"><br>
+    <input type="button" id="btn3" value="显示／隐藏"><br>
+    <input type="text" id="text"><span id="Span"></span><br>
+    <div>
+        <img src="../img/1.jpg" height="100" width="200" id="img">
+    </div>
+</body>
+</html>
