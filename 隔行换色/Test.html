@@ -3,83 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>隔行换色</title>
+    <style>
+        .even
+        {
+            background-color: #e0e0e0;
+        }
+        .odd
+        {
+            background-color: #ffffff;
+        }
+        .over
+        {
+            background-color: #78ade3;
+        }
+    </style>
+    <!--js实现-->
+    <!--<script src="../js/GeHangHuanSe.js" type="text/javascript"></script>-->
+    <!--jq实现-->
+    <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
     <script>
-        window.onload =function init()
+        $(function ()
         {
-            var table = document.getElementById("table");
-            var length = table.tBodies[0].rows.length;
-            for (var i =0;i<length;i++)
-            {
-                var tr = table.tBodies[0].rows[i];
-                tr.index = i;
-                tr.onmouseover = function ()
-                {
-                    this.style.backgroundColor = "#78ade3";
-                }
-                if (i % 2 == 0)
-                {
-                    tr.style.backgroundColor = "#e0e0e0";
-                    tr.onmouseout = function ()
-                    {
-                        this.style.backgroundColor = "#e0e0e0";
-                    }
-                }
-                else
-                {
-                    tr.onmouseout = function ()
-                    {
-                        this.style.backgroundColor = "#ffffff";
-                    }
-                }
-            }
+            $("tbody>tr:even").addClass("even");
+            $("tbody>tr:odd").addClass("odd");
 
+            $("tbody>tr").mouseenter(function ()
+            {
+                $(this).addClass("over");
+            })
 
-            var boxs = document.getElementsByTagName("input");
-            for (var i=0;i<boxs.length;i++)
+            $("tbody>tr").mouseleave(function ()
             {
-                var box = boxs[i];
-                if (box.id == "checkAll")
-                {
-                    box.onclick = function()
-                    {
-                        checkAll(this);
-                    }
-                }
-                else
-                {
-                    box.onclick = function()
-                    {
-                        checkOne(this);
-                    }
-                }
-            }
-        }
-        function checkAll(obj)
-        {
-            var checkBox = obj;
-            var boxs = document.getElementsByTagName("input");
-            if(checkBox.checked)
+                $(this).removeClass("over");
+            })
+
+            $("#checkAll").click(function ()
             {
-               for (var i=0;i<boxs.length;i++)
-               {
-                   boxs[i].checked = true;
-               }
-            }
-            else
-            {
-                for (var i=0;i<boxs.length;i++)
-                {
-                    boxs[i].checked = false;
-                }
-            }
-        }
-        function checkOne(obj)
-        {
-            if (!obj.checked)
-            {
-                document.getElementById("checkAll").checked = false;
-            }
-        }
+                $("input:checkbox").prop("checked",this.checked);
+            })
+        })
     </script>
 </head>
 <body>

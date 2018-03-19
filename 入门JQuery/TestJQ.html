@@ -3,6 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>JQuery入门</title>
+    <style>
+        #one,#two,#three,#four
+        {
+            border: 1px solid black;
+            height: 200px;
+            width: 300px;
+            display: inline;
+            float: left;
+
+        }
+        .mini
+        {
+            border: 1px solid black;
+            height: 100px;
+            width: 150px;
+            text-align: center;
+            margin:auto auto;
+        }
+    </style>
     <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
     <script>
 //        jQuery页面加载方法不存在覆盖问题，执行顺序和书写顺序相同
@@ -21,8 +40,27 @@
                 var span = document.getElementById("Span");
                 $(span).html("js对象转jq对象后,才能调用jq方法");
             })
+            //显示／隐藏
             $("#btn3").click(function () {
                 $("#img").toggle();
+            })
+
+            $("#btn4").click(function ()
+            {
+                $("#one,.mini").css("backgroundColor","red");
+            })
+            $("#btn5").click(function ()
+            {
+                $("#one").find(".mini").eq(0).css("backgroundColor","red");
+            })
+            $("#btn6").click(function ()
+            {
+                $("div[id='four']").css("backgroundColor","red");
+                $("#input").attr("type","button");
+                
+                //通常样式都写好在css文件，这里通过添加class属性，
+                // 两边class相同，从而达到设置样式的目的
+                $("#input").addClass("inputClass");
             })
         })
     </script>
@@ -35,5 +73,28 @@
     <div>
         <img src="../img/1.jpg" height="100" width="200" id="img">
     </div>
+
+    选择器<hr>
+    <input type="button" id="btn4" value="id为one和class为mini的">
+    <input type="button" id="btn5" value="id为one并且class为mini的">
+    <input type="button" id="btn6" value="属性id为four的"><br>
+
+    <div id="one" >
+        one
+        <div class="mini">111</div>
+    </div>
+    <div id="two">
+        two
+        <div class="mini">222</div>
+    </div>
+    <div id="three">
+        three
+        <div class="mini">333</div>
+    </div>
+    <div id="four">
+        three
+        <div class="mini">444</div>
+    </div>
+    <input  id="input" value="attr(key,value)设置属性">
 </body>
 </html>

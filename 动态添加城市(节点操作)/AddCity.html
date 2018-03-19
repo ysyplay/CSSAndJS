@@ -3,20 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>动态添加城市</title>
+    <!--js实现-->
+    <!--<script>-->
+        <!--window.onload = function ()-->
+        <!--{-->
+            <!--document.getElementById("btn").onclick = function ()-->
+            <!--{-->
+                <!--var ul = document.getElementById("ul");-->
+                <!--//创建文字节点-->
+                <!--var textNode = document.createTextNode("深圳");-->
+                <!--//创建元素节点-->
+                <!--var eleNode = document.createElement("li");-->
+                <!--eleNode.appendChild(textNode);-->
+                <!--ul.appendChild(eleNode);-->
+            <!--}-->
+        <!--}-->
+    <!--</script>-->
+    <!--jq实现-->
+    <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
     <script>
-        window.onload = function ()
+        $(function ()
         {
-            document.getElementById("btn").onclick = function ()
+
+//            遍历
+            $("li").each(function (i)
             {
-                var ul = document.getElementById("ul");
-                //创建文字节点
-                var textNode = document.createTextNode("深圳");
-                //创建元素节点
+                this.innerHTML = this.innerHTML+"市";
+            })
+                $.each($("li"),function (i,n)
+                {
+                    n.innerHTML = i+":"+n.innerHTML;
+                })
+
+            $("#btn").click(function ()
+            {
+                var textNode = document.createTextNode("深圳市");
                 var eleNode = document.createElement("li");
-                eleNode.appendChild(textNode);
-                ul.appendChild(eleNode);
-            }
-        }
+                $(eleNode).append(textNode);
+                $("ul").append(eleNode);
+            })
+        })
     </script>
 </head>
 <body>
