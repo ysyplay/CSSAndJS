@@ -3,6 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>jq表单验证</title>
+    <style>
+        /*设置提示的样式*/
+        label.error
+        {
+            background:url(../img/unchecked.gif) no-repeat 10px 3px;
+            padding-left: 30px;
+            font-family:georgia;
+            font-size: 15px;
+            font-style: normal;
+            color: red;
+            display: none;
+        }
+        label.success
+        {
+            background:url(../img/checked.gif) no-repeat 10px 3px;
+            padding-left: 30px;
+            display: none;
+        }
+    </style>
     <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="../js/validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="../js/validate/messages_zh.js"></script>
@@ -21,11 +40,21 @@
                     },
                     password_again:{
                         required:true,
-                        equalTo:"#password",
+                        equalTo:"[name='password']",
                     },
                     email:{
+                        required:true,
                         email:"email"
+                    },
+                    sex:
+                    {
+                        required:true,
+                    },
+                    AiHao:
+                    {
+                        required:true,
                     }
+
                 },
                 messages: {
                     username: {
@@ -39,6 +68,25 @@
                         required: "确认密码不能为空",
                         equalTo: "密码不一致",
                     },
+                    email:{
+                        required:"邮箱不能为空",
+                    },
+                    sex:
+                    {
+                        required:"性别必填",
+                    },
+                    AiHao:
+                    {
+                        required:"请选择爱好",
+                    }
+                },
+                errorClass:"error",//这个是验证失败的样式，默认error，可以不设置
+                validClass:"success",//这个是验证成功的样式，这个必须设置
+                errorElement: "label", //用来创建错误提示信息标签
+                success: function(label) { //验证成功后的执行的回调函数
+                    //label指向上面那个错误提示信息标签label
+                    label.text(" ") //清空错误提示消息
+                        .addClass("success"); //加上自定义的success类
                 }
             })
         })
@@ -48,14 +96,16 @@
 <body>
     <form action="#"  id="form">
         用户名：<input type="text" name="username" maxlength="15" placeholder="请输入用户名" id="username"><br/>
-        密码：<input type="password" name="password" required="required"><br/>
+        密码：<input type="password" id="password" name="password" required="required"><br/>
         确认密码：<input type="password" name="password_again"><br/>
         邮箱：<input type="text" name="email" id="email"><br/>
+        出生年月：<input type="text" name="" id=""><br/>
         性别：<input type="radio" name="sex" value="男" checked="checked">男
+        <!--这里注意：指定提示信息的位置-->
         <input type="radio" name="sex" value="女">女<br/>
         爱好：<input type="checkbox" name="AiHao" value="运动">运动
         <input type="checkbox" name="AiHao" value="音乐">音乐
-        <input type="checkbox" name="AiHao" value="计算机">计算机<br/>
+        <input type="checkbox" name="AiHao" value="计算机">计算机<label for="AiHao" class="error" style="display: none"></label><br/>
         头像：<input type="file" name="file"><br/>
         籍贯：<select name="province">
         <option >--请选择--</option>
