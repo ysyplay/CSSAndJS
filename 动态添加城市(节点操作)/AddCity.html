@@ -40,7 +40,8 @@
                 var textNode = document.createTextNode("深圳市");
                 var eleNode = document.createElement("li");
                 $(eleNode).append(textNode);
-                $("ul").append(eleNode);
+                //$("ul").append(eleNode);//包含在内的
+                $("li").eq(0).after(eleNode);//同级
             })
         })
     </script>
