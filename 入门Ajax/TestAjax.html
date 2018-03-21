@@ -4,27 +4,33 @@
     <meta charset="UTF-8">
     <title>Ajax测试，另准备客户端</title>
     <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../js/vendor/jquery.jsonp.js"></script>
     <script>
         function get()
         {
-           $.get(
-               "http://localhost:8080/cart/ajax.do", //url
-                {"name":"get","age":12},//请求参数
-               function (data)  //执行成功后的回掉函数
-               {
-
-                  $("#span").innerHTML = data;
-               },
-               alert(123);
-               "text"
-           );
+//            $.get(
+//                "http://localhost:8080/cart/ajaxobj.do",
+//                {"name":"get","age":12},
+//                function(data){
+//                    $("#span").html(data.data)
+//                },
+//                "json"
+//            )
+                //跨域请求
+                //这个是jquery.jsonp插件方法,注意：这里的后台代码返回是callback()包裹的json形式字符串
+                $.jsonp({
+                    url: "http://localhost:8080/cart/ajax.do",
+                    "data":{"name":"get","age":12},
+                    callbackParameter:"callback",//这个不指定为默认
+                });
         };
-
+        function callback(data) {
+            alert(data.data);
+        }
     </script>
 </head>
 <body>
    <input type="button" value="get" onclick="get()">
-   <input type="button" value="post" onclick="post()">
    <br>
    <span id="span"></span>
 </body>
