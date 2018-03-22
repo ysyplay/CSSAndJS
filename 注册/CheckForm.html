@@ -21,17 +21,46 @@
         }
     </style>
     <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../js/vendor/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="../js/vendor/jquery.jsonp.js"></script>
     <script type="text/javascript" src="../js/validate/jquery.validate.min.js"></script>
     <script type="text/javascript" src="../js/validate/messages_zh.js"></script>
     <script>
+        jQuery.validator.addMethod("isMobile", function(value, element) {
+            var length = value.length;
+            var regPhone = /^1([3578]\d|4[57])\d{8}$/;
+
+            return ;
+        }, "请正确填写您的手机号码");
+        function jsonp()
+        {
+            $.jsonp({
+                url: "http://localhost:8080/cart/jsonp.do",
+                "data":{"name":"jsonp","age":12},
+                callbackParameter:"callback",
+            });
+        }
+        function callback(data)
+        {
+            if(data.data == true)
+            {
+                $("#emailLabel").html("验证通过").addClass("success");
+            }
+            else
+            {
+                $("#emailLabel").html("验证失败").addClass("error").removeClass("success");
+            }
+        }
         $(function ()
         {
             $("#form").validate(
             {
+//                onkeyup:false,
                 rules:{
                     username:{
                         required:true,
                         minlength:6,
+                        remote:"http://localhost:8080/cart/jsonp.do",
                     },
                     password:{
                         required:true
@@ -57,6 +86,7 @@
                     username: {
                         required: "用户名不能为空",
                         minlength: "用户名长度大于6",
+                        remote:"用户名不可用"
                     },
                     password: {
                         required: "密码不能为空"
@@ -85,7 +115,7 @@
                     label.text(" ") //清空错误提示消息
                         .addClass("success"); //加上自定义的success类
                 }
-            })
+        })
         })
     </script>
 </head>
