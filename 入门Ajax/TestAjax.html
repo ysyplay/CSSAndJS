@@ -4,34 +4,74 @@
     <meta charset="UTF-8">
     <title>Ajax测试，另准备客户端</title>
     <script type="text/javascript" src="../js/vendor/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../js/vendor/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="../js/vendor/jquery.jsonp.js"></script>
     <script>
         function get()
         {
-//            $.get(
-//                "http://localhost:8080/cart/ajaxobj.do",
-//                {"name":"get","age":12},
-//                function(data){
-//                    $("#span").html(data.data)
-//                },
-//                "json"
-//            )
-                //跨域请求
-                //这个是jquery.jsonp插件方法,注意：这里的后台代码返回是callback()包裹的json形式字符串
-                $.jsonp({
-                    url: "http://localhost:8080/cart/ajax.do",
-                    "data":{"name":"get","age":12},
-                    callbackParameter:"callback",//这个不指定为默认
-                });
+            //post和get内容一样
+            $.get(
+                "http://localhost:8080/cart/ajax.do",
+                {"name":"get","age":12},
+                function(data){
+                    $("#span").html(data.data)
+                },
+                "json"
+            )
         };
+        function post()
+        {
+            $.post(
+                "http://localhost:8080/cart/ajax.do",
+                {"name":"post","age":12},
+                function(data){
+                    $("#span").html(data.data)
+                },
+                "json"
+            )
+        }
+        function ajax()
+        {
+            $.ajax({
+                async:true,
+                type:"post",
+                url:"http://localhost:8080/cart/ajax.do",
+                data:{"name":"ajax","age":12},
+                dataType:"json",
+                success:function (data)
+                {
+                    alert(data.data);
+                },
+                error:function ()
+                {
+                    alert("error");
+                }
+            })
+        }
+        function jsonp()
+        {
+            //跨域请求
+            //这个是jquery.jsonp插件方法,注意：这里的后台代码返回是callback()包裹的json形式字符串
+            $.jsonp({
+                url: "http://localhost:8080/cart/ajax.do",
+                "data":{"name":"jsonp","age":12},
+                callbackParameter:"callback",//这个不指定为默认
+            });
+        }
         function callback(data) {
             alert(data.data);
         }
     </script>
 </head>
 <body>
-   <input type="button" value="get" onclick="get()">
-   <br>
-   <span id="span"></span>
+<input type="button" value="get" onclick="get()">
+<br>
+<input type="button" value="post" onclick="post()">
+<br>
+<input type="button" value="ajax" onclick="ajax()">
+<br>
+<input type="button" value="跨域jsonp" onclick="jsonp()">
+<br>
+<span id="span"></span>
 </body>
 </html>
