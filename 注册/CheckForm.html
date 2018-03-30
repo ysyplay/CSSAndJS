@@ -53,8 +53,14 @@
         }
         $(function ()
         {
+            const input = document.getElementsByTagName('input')[0];
+
+                input.scrollIntoView();
+
+
             $("#form").validate(
             {
+
 //                onkeyup:false,
                 rules:{
                     username:{

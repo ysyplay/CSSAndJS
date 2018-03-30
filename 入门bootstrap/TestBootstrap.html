@@ -23,6 +23,81 @@
             /*background-color: #8c8c8c;*/
         }
     </style>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+    <script>
+        $(function ()
+        {
+            window.addEventListener('resize', function () {
+                if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+                    window.setTimeout(function () {
+                        document.activeElement.scrollIntoViewIfNeeded();
+                    }, 0);
+                }
+            })
+        })
+        function dropdown(obj)
+        {
+            alert($(".dropdown-toggle").html())
+            $(".dropdown-toggle").html(obj.innerHTML+"<span class=\"caret\"></span>")
+        }
+
+
+       //JS 与原生交互
+        function setupWebViewJavascriptBridge(callback)
+        {
+            if (window.WebViewJavascriptBridge)
+            {
+                return callback(WebViewJavascriptBridge);
+            }
+            if (window.WVJBCallbacks)
+            {
+                return window.WVJBCallbacks.push(callback);
+            }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+        }
+
+        setupWebViewJavascriptBridge(function(bridge){
+            bridge.registerHandler('testJSFunction', function(data, responseCallback) {
+                //在oc的webview有代理方法拦截这个弹窗，从而进行交互
+                alert('JS方法被调用:'+data);
+                responseCallback('js执行过了');
+            })
+        })
+
+        function submitButtClick()
+        {
+            var obj=new Object();
+            $(".form-control").each(function (i) {
+                obj[this.name] = this.value;
+
+            })
+//            var params = {'title':'测试分享的标题','content':'测试分享的内容','url':'http://www.baidu.com'};
+            WebViewJavascriptBridge.callHandler('submitButtClick',obj,function(response) {
+            });
+        }
+
+
+        $(function() {
+            $('input').on('click', function () {
+                var target = this;
+                // 使用定时器是为了让输入框上滑时更加自然
+                setTimeout(function(){
+                    target.scrollIntoView(true);
+                },50);
+            });
+
+
+        })
+    </script>
 </head>
 <body>
 <div class="container">
@@ -71,18 +146,48 @@
                 <td>小红</td>
                 <td>26</td>
             </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>6</td>
+                <td>小红</td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>6</td>
+                <td>小红</td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>6</td>
+                <td>小红</td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>6</td>
+                <td>小红</td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>6</td>
+                <td>小红</td>
+                <td>26</td>
+            </tr>
             </tbody>
         </table>
     </div>
     <div>
-        <form>
+        <form action="#">
             <div class="form-horizontal">
                 <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
             </div>
             <div class="form-group">
                 <label for="exampleInputFile">File input</label>
@@ -94,8 +199,32 @@
                     <input type="checkbox"> Check me out
                 </label>
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <select name="selectState" style="text-align: center; width: 40%" >
+                <option value="0">状态1</option>
+                <option value="1">状态2</option>
+                <option value="2">状态3</option>
+                <option value="3">状态4</option>
+                <option value="4">状态5</option>
+            </select>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    请选择
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li style="text-align: center" onclick="dropdown(this)">选项1</li>
+                    <li role="separator" class="divider"></li>
+                    <li onclick="dropdown(this)">选项2</li>
+                    <li role="separator" class="divider"></li>
+                    <li onclick="dropdown(this)">选项3</li>
+                    <li role="separator" class="divider"></li>
+                    <li onclick="dropdown(this)">选项4</li>
+                </ul>
+            </div>
+            <input type="submit" value="提交">
         </form>
+        <input type="button" value="Submit" onclick="submitButtClick()">
+<hr>
     </div>
     <div class="sg">
         <div class="row">
@@ -126,13 +255,9 @@
             <div class="col-md-6">.col-md-6</div>
         </div>
     </div>
-
 </div>
 
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
 </body>
 </html>
